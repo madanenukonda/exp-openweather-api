@@ -1,0 +1,7 @@
+api:
+  id: "16666775"
+  
+sys-open-weather-api:
+  host: "sys-openweather-api.us-e2.cloudhub.io"
+  port: "80"
+  path: "/weather"

@@ -1,0 +1,32 @@
+{
+  "configs": [
+    "exp-openweather-api.xml",
+    "call-to-sys-openweather-api.xml",
+    "global.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:exp-openweather-api:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.3.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/exp-openweather-api.raml",
+        "call-to-sys-openweather-api.xml",
+        "exp-openweather-api.xml",
+        "global.xml",
+        "log4j2.xml",
+        "properties.dev/config-dev.yaml",
+        "properties.prod/config-prod.yaml",
+        "properties.qa/config-qa.yaml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}
