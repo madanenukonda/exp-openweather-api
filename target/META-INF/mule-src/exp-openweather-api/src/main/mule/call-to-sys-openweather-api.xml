@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="exp-openweather-api-sub_flow" doc:id="465f48bf-816c-4f43-8960-a675fe4ff332" >
+		<logger level="INFO" doc:name="log-start" doc:id="845f1ba7-da84-41d7-a02a-de40f397ad8e" message="#[payload]" />
+		<http:request method="GET" doc:name="call-to-sys-openweather-api" doc:id="732e6976-3a27-47c5-b075-588111a3d04f" path="${sys-open-weather-api.path}" config-ref="HTTP-sys-openweather-api">
+			<http:query-params><![CDATA[#[%dw 2.0
+output application/json
+---
+ {
+ 	zip : attributes.queryParams.zip
+ }]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="log-sys-response" doc:id="8f941bd5-c83f-459f-889d-d864cd411462" />
+		<ee:transform doc:name="sys-openweather-response" doc:id="9d8eae7f-423e-4aab-a278-843340221b26">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd" doc:name="final-response">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+  city_name: payload.city_name,
+  country: payload.country,
+  long: payload.long,
+  lat: payload.lat,
+  humidity: payload.humidity,
+  temp: payload.temp,
+  temp_min: payload.temp_min,
+  temp_max: payload.temp_max
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<logger level="INFO" doc:name="log-final-response" doc:id="4c3c59a5-05fa-4f4f-9f8d-8acfd7bc7675" message="#[payload]" />
+	</sub-flow>
+</mule>

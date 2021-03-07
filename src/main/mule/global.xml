@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="50cd16e8-b378-4506-891e-81f7799b33cf" flowRef="exp-openweather-api-main" />
+	<http:request-config name="HTTP-sys-openweather-api" doc:name="HTTP Request configuration" doc:id="feff2f01-d3cb-4a6d-82a3-c929384e6ec2" >
+		<http:request-connection host="${sys-open-weather-api.host}" port="${sys-open-weather-api.port}" />
+	</http:request-config>
+	<global-property doc:name="Global Property" doc:id="97129a7e-a7e8-4a23-81a1-fdc21181d471" name="mule.env" value="dev" />
+	<configuration-properties doc:name="Configuration properties" doc:id="40bcc156-31b3-47da-9cd1-4ac6e7ac6202" file="properties.${mule.env}/config-${mule.env}.yaml" />
+</mule>
